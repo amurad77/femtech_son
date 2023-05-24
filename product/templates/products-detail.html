@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Products | FemTech{% endblock %}
+
+{% block content %}
+
+
+
+<section id="page-title-area" class="section section-page-title-area">
+    <div class="container">
+        <div class="page-title-holder">
+            <h2 class="page-title">{{ products.title }}</h2>
+        </div>
+        <ol class="breadcrumb">
+            <li><a href="/">Home</a></li>
+            <li><a href="/products/">Products</a></li>
+            <li>{{ products.title }}</li>
+        </ol>
+    </div>
+</section>
+
+<main>
+    <div class="container news-details">
+        <div class="row">
+            <div class="col-12">
+                <div class="product-details">
+                    <div class="gallery">
+                        <div class="photos">
+                            <div class="block active">
+                                <img src="{{products.image.url }}" alt="{{products.title}}">
+                            </div>
+                            {% if products.other_image1 %}
+                            <div class="block">
+                                <img src="{{products.other_image1.url }}" alt="{{products.title}}">
+                            </div>
+                            {% endif %}
+                            {% if products.other_image2 %}
+                            <div class="block">
+                                <img src="{{products.other_image2.url }}" alt="{{products.title}}">
+                            </div>
+                            {% endif %}
+                            {% if products.other_image3 %}
+                            <div class="block">
+                                <img src="{{products.other_image3.url }}" alt="{{products.title}}">
+                            </div>
+                            {% endif %}
+                        </div>
+                        {% if products.other_image1 %}
+                        <div class="buttons">
+                            <a class="prev" href="#"><i class="fa-solid fa-angle-left"></i></a>
+                            <a class="next" href="#"><i class="fa-solid fa-angle-right"></i></a>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div class="detail-text">
+                        <div class="detail-text-header">
+                            <h2>{{ products.title }}</h2>
+                            {% if products.price %}
+                            <span class="price">{{ products.price }} AZN</span>
+                            {% endif %}
+                        </div>
+                        <div class="line"></div>
+                        <div class="buy-now">
+                            <p class="note">Note:</p>
+                            <a href="https://wa.me/994998999226" target="_blank">Buy now</a>
+                        </div>
+                        <p>{{ products.note|safe }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    var nextBtn = document.querySelector(".gallery .buttons .next");
+    var prevBtn = document.querySelector(".gallery .buttons .prev");
+    var slide = document.querySelectorAll(".gallery .photos .block");
+    var i = 0;
+    prevBtn.onclick = function (e) {
+        slide[i].classList.remove("active");
+        i--;
+        if (i < 0) {
+            i = slide.length - 1;
+        }
+        slide[i].classList.add("active");
+        e.preventDefault();
+    };
+    nextBtn.onclick = function (e) {
+        slide[i].classList.remove("active");
+        i++;
+        if (i >= slide.length) {
+            i = 0;
+        }
+        slide[i].classList.add("active");
+        e.preventDefault();
+    };
+</script>
+
+{% endblock %}

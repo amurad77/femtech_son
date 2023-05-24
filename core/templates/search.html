@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Search Results | FemTech {% endblock %}
+
+{% block content %}
+
+    <section id="page-title-area" class="section section-page-title-area">
+        <div class="container">
+            <div class="page-title-holder">
+                <h2 class="page-title">Search Results for "{{ searched }}"</h2>
+            </div>
+            <ol class="breadcrumb">
+                <li><a href="/">Home</a></li>
+                <li class="active">Search</li>
+            </ol>
+        </div>
+    </section>
+
+    <main id="search-page" class="main-content">
+        {% if searched %}
+        {% for i in total %}
+        <div class="search-box">
+            <div class="container">
+                {% if i.is_event == True %}
+                <a href="{% url 'event_details' i.slug %}">
+                    <img src="{{ i.image.url }}" alt="{{ i.title }}">
+                </a>
+                <a href="{% url 'event_details' i.slug %}">
+                    <h1>{{ i.title }}</h1>
+                    <p>{{ i.description|truncatechars:250|safe }}</p>
+                </a>
+    
+                {% elif i.is_news == True %}
+                <a href="{% url 'news_details' i.slug %}">
+                    <img src="{{ i.image.url }}" alt="{{ i.title }}">
+                </a>
+                <a href="{% url 'news_details' i.slug %}">
+                    <h1>{{ i.title }}</h1>
+                    <p>{{ i.description|truncatechars:250|safe }}</p>
+                </a>
+    
+                {% else %}
+                <a href="{% url 'programs_details' i.slug %}">
+                    <img src="{{ i.image.url }}" alt="{{ i.title }}">
+                </a>
+                <a href="{% url 'programs_details' i.slug %}">
+                    <h1>{{ i.title }}</h1>
+                    <p>{{ i.description|truncatechars:250|safe }}</p>
+                </a>
+    
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+        {% endif %}
+    
+        <div class="container error-result">
+            <p>{{ok}}</p>
+        </div>
+    </main>
+{% endblock %}
